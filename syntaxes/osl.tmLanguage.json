@@ -1,0 +1,264 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "osl",
+  "scopeName": "source.osl",
+  "patterns": [{ "include": "#program" }],
+  "repository": {
+    "program": {
+      "patterns": [{ "include": "#declaration" }]
+    },
+    "declaration": {
+      "patterns": [
+        { "include": "#funDecl" },
+        { "include": "#varDecl" },
+        { "include": "#statement" }
+      ]
+    },
+    "funDecl": {
+      "begin": "\\bfn\\b",
+      "beginCaptures": {
+        "0": { "name": "keyword.control.fn.osl" }
+      },
+      "end": "(?=\\{)",
+      "name": "meta.function.decl.osl",
+      "patterns": [
+        {
+          "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b",
+          "name": "entity.name.function.osl"
+        },
+        {
+          "match": "\\(",
+          "name": "punctuation.definition.parameters.begin.osl"
+        },
+        {
+          "match": "\\)",
+          "name": "punctuation.definition.parameters.end.osl"
+        },
+        {
+          "match": ",",
+          "name": "punctuation.separator.parameters.osl"
+        },
+        { "include": "#parameters" }
+      ]
+    },
+    "varDecl": {
+      "begin": "\\bvar\\b",
+      "beginCaptures": {
+        "0": { "name": "keyword.control.var.osl" }
+      },
+      "end": ";",
+      "endCaptures": {
+        "0": { "name": "punctuation.terminator.statement.osl" }
+      },
+      "name": "meta.var.decl.osl",
+      "patterns": [
+        {
+          "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b",
+          "name": "variable.declaration.osl"
+        },
+        {
+          "match": ":=",
+          "name": "keyword.operator.assignment.osl"
+        },
+        { "include": "#expression" }
+      ]
+    },
+    "ifStmt": {
+      "begin": "\\bif\\b",
+      "beginCaptures": {
+        "0": { "name": "keyword.control.if.osl" }
+      },
+      "end": "(?=\\b(else|$))",
+      "name": "meta.if.statement.osl",
+      "patterns": [{ "include": "#expression" }, { "include": "#statement" }]
+    },
+    "elseStmt": {
+      "begin": "\\belse\\b",
+      "beginCaptures": {
+        "0": { "name": "keyword.control.else.osl" }
+      },
+      "end": "$",
+      "name": "meta.else.statement.osl",
+      "patterns": [{ "include": "#statement" }]
+    },
+    "printStmt": {
+      "begin": "\\bprint\\b",
+      "beginCaptures": {
+        "0": { "name": "keyword.control.print.osl" }
+      },
+      "end": ";",
+      "endCaptures": {
+        "0": { "name": "punctuation.terminator.statement.osl" }
+      },
+      "name": "meta.print.statement.osl",
+      "patterns": [
+        {
+          "begin": "\\(",
+          "beginCaptures": {
+            "0": { "name": "punctuation.definition.arguments.begin.osl" }
+          },
+          "end": "\\)",
+          "endCaptures": {
+            "0": { "name": "punctuation.definition.arguments.end.osl" }
+          },
+          "patterns": [{ "include": "#expression" }]
+        }
+      ]
+    },
+    "returnStmt": {
+      "begin": "\\breturn\\b",
+      "beginCaptures": {
+        "0": { "name": "keyword.control.return.osl" }
+      },
+      "end": ";",
+      "endCaptures": {
+        "0": { "name": "punctuation.terminator.statement.osl" }
+      },
+      "name": "meta.return.statement.osl",
+      "patterns": [{ "include": "#expression" }]
+    },
+    "block": {
+      "begin": "\\{",
+      "beginCaptures": {
+        "0": { "name": "punctuation.section.block.begin.osl" }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": { "name": "punctuation.section.block.end.osl" }
+      },
+      "name": "meta.block.osl",
+      "patterns": [{ "include": "#declaration" }]
+    },
+    "expressionStmt": {
+      "begin": "(?<![\\w])",
+      "end": ";",
+      "endCaptures": {
+        "0": { "name": "punctuation.terminator.statement.osl" }
+      },
+      "name": "meta.expression.statement.osl",
+      "patterns": [{ "include": "#expression" }]
+    },
+    "expression": {
+      "patterns": [{ "include": "#assignment" }, { "include": "#expB" }]
+    },
+    "assignment": {
+      "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b\\s*:=\\s*",
+      "name": "keyword.operator.assignment.osl"
+    },
+    "expB": {
+      "patterns": [{ "include": "#logicOr" }]
+    },
+    "logicOr": {
+      "patterns": [
+        { "include": "#logicAnd" },
+        {
+          "match": "\\|\\|",
+          "name": "keyword.operator.logical.osl"
+        }
+      ]
+    },
+    "logicAnd": {
+      "patterns": [
+        { "include": "#comparison" },
+        {
+          "match": "&&",
+          "name": "keyword.operator.logical.osl"
+        }
+      ]
+    },
+    "comparison": {
+      "patterns": [
+        { "include": "#add" },
+        {
+          "match": "(<=|>=|<|>|=|!=)",
+          "name": "keyword.operator.comparison.osl"
+        }
+      ]
+    },
+    "add": {
+      "patterns": [
+        { "include": "#mul" },
+        {
+          "match": "(\\+|\\-)",
+          "name": "keyword.operator.arithmetic.osl"
+        }
+      ]
+    },
+    "mul": {
+      "patterns": [
+        { "include": "#exp" },
+        {
+          "match": "(\\*|/|%)",
+          "name": "keyword.operator.arithmetic.osl"
+        }
+      ]
+    },
+    "exp": {
+      "patterns": [
+        { "include": "#unary" },
+        {
+          "match": "\\^",
+          "name": "keyword.operator.arithmetic.osl"
+        }
+      ]
+    },
+    "unary": {
+      "patterns": [
+        {
+          "match": "(-|√)",
+          "name": "keyword.operator.unary.osl"
+        },
+        { "include": "#atom" }
+      ]
+    },
+    "atom": {
+      "patterns": [
+        {
+          "match": "\\b\\d+(\\.\\d*)?|\\.\\d+\\b",
+          "name": "constant.numeric.osl"
+        },
+        {
+          "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b(?=\\s*\\()",
+          "name": "entity.name.function.osl"
+        },
+        {
+          "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b",
+          "name": "variable.osl"
+        },
+        {
+          "begin": "\\(",
+          "beginCaptures": {
+            "0": { "name": "punctuation.parenthesis.begin.osl" }
+          },
+          "end": "\\)",
+          "endCaptures": {
+            "0": { "name": "punctuation.parenthesis.end.osl" }
+          },
+          "name": "meta.group.osl",
+          "patterns": [{ "include": "#expression" }]
+        }
+      ]
+    },
+    "parameters": {
+      "patterns": [
+        {
+          "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b",
+          "name": "variable.parameter.osl"
+        },
+        {
+          "match": ",",
+          "name": "punctuation.separator.parameter.osl"
+        }
+      ]
+    },
+    "arguments": {
+      "patterns": [
+        { "include": "#expression" },
+        {
+          "match": ",",
+          "name": "punctuation.separator.argument.osl"
+        }
+      ]
+    }
+  }
+}

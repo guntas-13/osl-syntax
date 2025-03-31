@@ -1,0 +1,34 @@
+{
+  "name": "osl",
+  "displayName": "osl-extension",
+  "description": "Syntax Highlighting for osl.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.98.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "osl",
+        "aliases": [
+          "osl",
+          "osl"
+        ],
+        "extensions": [
+          ".osl"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "osl",
+        "scopeName": "source.osl",
+        "path": "./syntaxes/osl.tmLanguage.json"
+      }
+    ]
+  }
+}
