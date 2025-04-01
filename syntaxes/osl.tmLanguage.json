@@ -81,7 +81,7 @@
       "patterns": [
         {
           "name": "keyword.control.osl",
-          "match": "\\b(?:fn|var|return|if|elif|else|log)\\b"
+          "match": "\\b(?:fn|var|return|if|elif|else|log|print)\\b"
         },
         {
           "name": "storage.type.osl",
