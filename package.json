@@ -1,7 +1,9 @@
 {
+  "icon": "assets/oslMascot.png",
   "name": "osl",
   "displayName": "osl-extension",
   "description": "Syntax Highlighting for osl.",
+  "publisher": "GuntasSinghSaran",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.98.0"
