@@ -9,7 +9,8 @@
     { "include": "#keyword" },
     { "include": "#operator" },
     { "include": "#punctuation" },
-    { "include": "#identifier" }
+    { "include": "#identifier" },
+    { "include": "#character" }
   ],
   "repository": {
     "comment": {
@@ -42,28 +43,26 @@
           "end": "\"",
           "endCaptures": {
             "0": { "name": "punctuation.definition.string.end.osl" }
-          },
-          "patterns": [
-            {
-              "name": "constant.character.escape.osl",
-              "match": "\\\\."
-            }
-          ]
-        },
+          }
+        }
+      ]
+    },
+    "character": {
+      "patterns": [
         {
-          "name": "string.quoted.single.osl",
+          "name": "constant.character.osl",
           "begin": "'",
           "beginCaptures": {
-            "0": { "name": "punctuation.definition.string.begin.osl" }
+            "0": { "name": "punctuation.definition.character.begin.osl" }
           },
           "end": "'",
           "endCaptures": {
-            "0": { "name": "punctuation.definition.string.end.osl" }
+            "0": { "name": "punctuation.definition.character.end.osl" }
           },
           "patterns": [
             {
-              "name": "constant.character.escape.osl",
-              "match": "\\\\."
+              "name": "constant.character.inner.osl",
+              "match": "\\\\.|[^\\\\']"
             }
           ]
         }
@@ -72,20 +71,68 @@
     "number": {
       "patterns": [
         {
-          "name": "constant.numeric.osl",
-          "match": "\\b(?:0[bB][01]+|0[oO][0-7]+|0[xX][0-9A-Fa-f]+|\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?)\\b"
+          "name": "constant.numeric.hex.osl",
+          "match": "\\b0[xX][0-9a-fA-F]+(?:\\.[0-9a-fA-F]+)?(?:[pP][+-]?[0-9]+)?\\b"
+        },
+        {
+          "name": "constant.numeric.decimal.osl",
+          "match": "\\b[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\\b"
+        },
+        {
+          "name": "constant.numeric.octal.osl",
+          "match": "\\b0[oO][0-7]+(?:\\.[0-7]+)?(?:[eE][+-]?[0-9]+)?\\b"
+        },
+        {
+          "name": "constant.numeric.binary.osl",
+          "match": "\\b0[bB][01]+(?:\\.[01]+)?(?:[eE][+-]?[0-9]+)?\\b"
         }
       ]
     },
     "keyword": {
       "patterns": [
         {
+          "name": "keyword.functionDeclaration.osl",
+          "match": "fn"
+        },
+        {
+          "name": "keyword.variableDeclaration.osl",
+          "match": "var"
+        },
+        {
+          "name": "keyword.constantDeclaration.osl",
+          "match": "const"
+        },
+        {
+          "name": "keyword.return.osl",
+          "match": "return"
+        },
+        {
           "name": "keyword.control.osl",
-          "match": "\\b(?:fn|var|return|if|elif|else|log|print)\\b"
+          "match": "\\b(?:if|elif|else)\\b"
+        },
+        {
+          "name": "keyword.io.osl",
+          "match": "\\b(?:log|print)\\b"
+        },
+        {
+          "name": "keyword.loop.osl",
+          "match": "\\b(?:while|for)\\b"
         },
         {
           "name": "storage.type.osl",
           "match": "\\b(?:bool|i8|i16|i32|i64|i128|u8|u16|u32|u64|u128|f8|f16|f32|f64|f128|c8)\\b"
+        },
+        {
+          "name": "keyword.bool.true.osl",
+          "match": "true"
+        },
+        {
+          "name": "keyword.bool.false.osl",
+          "match": "false"
+        },
+        {
+          "name": "keyword.null.osl",
+          "match": "null"
         }
       ]
     },
@@ -96,16 +143,104 @@
           "match": ":="
         },
         {
-          "name": "keyword.operator.osl",
-          "match": "(\\+|\\-|\\*|\\/|%|\\^|&|\\||~|!|<=|>=|<|>|==|~=|<<|>>|!\\||!\\&)"
+          "name": "keyword.operator.functionReturn.osl",
+          "match": "->"
+        },
+        {
+          "name": "keyword.operator.LeftShift.osl",
+          "match": "<<"
+        },
+        {
+          "name": "keyword.operator.RightShift.osl",
+          "match": ">>"
+        },
+        {
+          "name": "keyword.operator.notEqual.osl",
+          "match": "~="
+        },
+        {
+          "name": "keyword.operator.lessThanEqualTo.osl",
+          "match": "<="
+        },
+        {
+          "name": "keyword.operator.greaterThanEqualTo.osl",
+          "match": ">="
+        },
+        {
+          "name": "keyword.operator.addition.osl",
+          "match": "\\+"
+        },
+        {
+          "name": "keyword.operator.negative.osl",
+          "match": "\\-"
+        },
+        {
+          "name": "keyword.operator.pointer.osl",
+          "match": "#"
+        },
+        {
+          "name": "keyword.operator.not.osl",
+          "match": "~"
+        },
+        {
+          "name": "keyword.operator.valAtDeRef.osl",
+          "match": "@"
+        },
+        {
+          "name": "keyword.operator.xand.osl",
+          "match": "!&"
+        },
+        {
+          "name": "keyword.operator.xor.osl",
+          "match": "!\\|"
+        },
+        {
+          "name": "keyword.operator.and.osl",
+          "match": "&"
+        },
+        {
+          "name": "keyword.operator.or.osl",
+          "match": "\\|"
+        },
+        {
+          "name": "keyword.operator.modulo.osl",
+          "match": "%"
+        },
+        {
+          "name": "keyword.operator.power.osl",
+          "match": "\\^"
+        },
+        {
+          "name": "keyword.operator.division.osl",
+          "match": "/"
+        },
+        {
+          "name": "keyword.operator.multiply.osl",
+          "match": "\\*"
+        },
+        {
+          "name": "keyword.operator.equal.osl",
+          "match": "="
+        },
+        {
+          "name": "keyword.operator.lessThan.osl",
+          "match": "<"
+        },
+        {
+          "name": "keyword.operator.greaterThan.osl",
+          "match": ">"
         }
       ]
     },
     "punctuation": {
       "patterns": [
         {
-          "name": "punctuation.separator.osl",
-          "match": "[,;]"
+          "name": "punctuation.separator.comma.osl",
+          "match": ","
+        },
+        {
+          "name": "punctuation.separator.semicolon.osl",
+          "match": ";"
         },
         {
           "name": "punctuation.brackets.osl",
@@ -117,7 +252,7 @@
       "patterns": [
         {
           "name": "variable.other.osl",
-          "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"
+          "match": "\\b[_A-Za-z][_A-Za-z0-9]*\\b"
         }
       ]
     }
