@@ -1,3 +1,1 @@
-# osl Syntax Highlighter VSCode Extension
-
-![](./assets/view.png)
+# osl Syntax Highlighter

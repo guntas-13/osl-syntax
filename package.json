@@ -3,7 +3,7 @@
   "displayName": "osl-syntax-Highlighting",
   "description": "Syntax Highlighting for osl. (The Unambiguous Language)",
   "publisher": "GuntasSinghSaran",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "engines": {
     "vscode": "^1.98.0"
   },
