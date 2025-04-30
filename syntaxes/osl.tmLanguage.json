@@ -131,8 +131,8 @@
           "match": "false"
         },
         {
-          "name": "keyword.null.osl",
-          "match": "null"
+          "name": "keyword.nav.osl",
+          "match": "nav"
         }
       ]
     },
